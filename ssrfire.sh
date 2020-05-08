@@ -87,9 +87,14 @@ if [[ ${server:0:4} != "http" ]]; then
 	server="http://${server}"
 fi
 
-cat output/$domain/raw_urls.txt | grep "?" | sort | uniq | qsreplace $server > output/$domain/final_urls.txt
+uniq output/$domain/raw_urls.txt | grep "?" | sort | qsreplace ""  > output/$domain/parameterised_urls.txt
 
-#./replaceParam.sh output/$domain/raw_urls.txt $2 | grep "?" | sort > output/$domain/parameterised_urls.txt
+while IFS= read -r url; do
+
+	rs="${server}/${url}"
+	echo $url | qsreplace $rs | grep '=' >> output/$domain/final_urls.txt
+done < output/$domain/parameterised_urls.txt
+
 echo -e "${green}Done${reset}\n"
 
 total_urls=$(grep "" -c output/$domain/final_urls.txt)

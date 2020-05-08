@@ -8,13 +8,14 @@ chmod +x ssrfire.sh
 if [ ! -d output ]; then
 	mkdir output
 fi
-
+echo "${red}Note: You must have go and python 3.7 installed for the tools to work${reset}"
 read -p "${yellow}Do you want to install gau[y/n]:${reset} " input
 if [[ $input == 'y' ]]; then
 	echo "${cyan}Installing gau... ${reset}"
 	mkdir tools
 	cd tools
 	git clone https://github.com/lc/gau.git
+	echo "Building the main.go file. ${red}This process fails if you don't have go installed. If you have any error messages below, try again after installing go.${reset}"
        	cd gau
 	go build main.go
 	chmod +x main
@@ -26,7 +27,7 @@ if [[ $input == 'y' ]]; then
 		tools/gau/./main --subs \$1
 	}
 	" >> .profile
-	echo -e "${green}Done${reset}\n"
+	echo -e "\n"
 fi
 
 read -p "${yellow}Do you want to install ffuf[y/n]: ${reset}" input
@@ -37,6 +38,7 @@ if [[ $input == 'y' ]]; then
 	fi
 	cd tools
 	git clone https://github.com/ffuf/ffuf.git
+	echo "Building the main.go file. ${red}This process fails if you don't have go installed. If you have any error messages below, try again after installing go.${reset}"
 	cd ffuf
 	go build main.go help.go
 	chmod +x main
@@ -44,7 +46,7 @@ if [[ $input == 'y' ]]; then
 	echo -e "ffuf(){
 		tools/ffuf/./main -u \$1 -w \$2 -c -t 100 
 	}" >> .profile
-	echo -e "${green}Done${reset}\n"
+	echo -e "\n"
 fi
 
 read -p "${yellow}Do you want to install OpenRedireX[y/n]:  ${reset}" input
@@ -70,18 +72,20 @@ if [[ $input == 'y' ]]; then
 	fi
 	cd tools 
 	git clone https://github.com/tomnomnom/qsreplace
+	echo "Building the main.go file. ${red}This process fails if you don't have go installed. If you have any error messages below, try again after installing go.${reset}"
 	cd qsreplace
 	go build main.go
 	cd ../..
 	echo -e "qsreplace(){
 		tools/qsreplace/./main \$1
 	}" >> .profile
-	echo -e "${green}Done${reset}\n"
+	echo -e "\n"
 fi
 if [ -d tools ]; then
 	source .profile
 	echo "Your tools are installed under the tools directory"
-	echo "${green}All set. Now just run SSRFire!${reset}"
+	#echo "${green}All set. Now just run SSRFire!${reset}"
 else
 	echo "${red}Make sure that you edit the 10th line in the ssrfire.sh file. Refer the github README for more details.${reset}"
 fi
+echo "${yellow}If you encountered any error while installing due to reasons like go/python not installed, remove the tools directory using rm -rf tools, and run the script again."
