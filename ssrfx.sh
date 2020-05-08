@@ -80,11 +80,11 @@ total_urls=$(grep "" -c output/$domain/final_urls.txt)
 echo -e "${green}The final URL list is at $domain/final_urls.txt${reset}\n"
 echo "${yellow}Total URLs fetched with parameters: ${total_urls}${reset}"
 
-echo -e "\n${cyan}Your server value is being injected into all the parameter values!${reset}"
+echo -e "\n${cyan}Firing requests, check your server for any traffic!${reset}"
 
 python3 async_req.py $domain
 
-echo "${green}Done! Check your server for any traffic!${reset}"
+echo "${green}Done!${reset}"
 
 read -p "${magenta}Do you want to check for open redirects?[y/any other character]${reset}" input
 if [[ $input == 'y' ]]; then
