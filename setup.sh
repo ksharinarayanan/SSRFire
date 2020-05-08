@@ -4,6 +4,7 @@ yellow=`tput setaf 3`
 cyan=`tput setaf 6`
 reset=`tput sgr0`
 
+chmod +x ssrfx.sh
 
 read -p "${yellow}Do you want to install gau[y/n]:${reset} " input
 if [[ $input == 'y' ]]; then
