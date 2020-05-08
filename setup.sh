@@ -5,6 +5,9 @@ cyan=`tput setaf 6`
 reset=`tput sgr0`
 
 chmod +x ssrfire.sh
+if [ ! -d output ]; then
+	mkdir output
+fi
 
 read -p "${yellow}Do you want to install gau[y/n]:${reset} " input
 if [[ $input == 'y' ]]; then
@@ -57,4 +60,6 @@ fi
 if [ -d tools ]; then
 	source .profile
 	echo "Your tools are installed under the tools directory"
+else
+	echo "${red}Make sure that you edit the 10th line in the ssrfire.sh file. Refer the github README for more details.${reset}"
 fi
