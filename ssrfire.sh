@@ -62,7 +62,7 @@ if [ -d output/$domain ]; then
 	fi
 fi
 
-echo -e "\n${yellow}Important note: This works only if you have ffuf, gau installed and have set their paths accordingly. If you want to check for open redirects using openredirex, you must have openredirex too.(Run setup.sh to and install all the tools to do that automatically)\n ${reset}"
+echo -e "\n${yellow}Important note: This works only if you have ffuf, gau and qsreplace installed and have set their paths accordingly. If you want to check for open redirects using openredirex, you must have openredirex too.(Run setup.sh to and install all the tools to do that automatically)\n ${reset}"
 mkdir output/$domain
 
 if [[ $3 == "" ]]; then
@@ -78,23 +78,29 @@ fi
 
 echo "${cyan}Sorting out the URLs with parameters and replacing the parameter's original value with your server${reset}"
 
-./replaceParam.sh output/$domain/raw_urls.txt $2 | grep "?" | sort > output/$domain/parameterised_urls.txt
+server=$2
+if [[ ${server:0:4} != "http" ]]; then
+	server="http://${server}"
+fi
+
+cat output/$domain/raw_urls.txt | grep "?" | sort | uniq | qsreplace $server > output/$domain/final_urls.txt
+
+#./replaceParam.sh output/$domain/raw_urls.txt $2 | grep "?" | sort > output/$domain/parameterised_urls.txt
 echo -e "${green}Done${reset}\n"
-echo "${cyan}Removing duplicates${reset}"
-uniq output/$domain/parameterised_urls.txt > output/$domain/final_urls.txt
+
 total_urls=$(grep "" -c output/$domain/final_urls.txt)
 echo -e "${green}The final URL list is at $domain/final_urls.txt${reset}\n"
 echo "${yellow}Total URLs fetched with parameters: ${total_urls}${reset}"
 
 echo -e "\n${cyan}Firing requests, check your server for any traffic!${reset}"
 
-python3 async_req.py $domain
+ffuf FUZZ output/$domain/final_urls.txt
 
 echo "${green}Done!${reset}"
 
 read -p "${magenta}Do you want to check for open redirects?[y/any other character]${reset}" input
 if [[ $input == 'y' ]]; then
-	./replaceParam.sh output/$domain/final_urls.txt "FUZZ" > output/$domain/fuzz_urls.txt
+	cat output/$domain/final_urls.txt | qsreplace "FUZZ" > output/$domain/fuzz_urls.txt
 	echo -e "\nChoose your tool: ${red}(Works only if you have the selected tool installed)${reset}"
 
 	echo "1) FFUF${red}(Floods your terminal with large output)${reset}"

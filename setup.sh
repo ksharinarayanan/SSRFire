@@ -38,7 +38,7 @@ if [[ $input == 'y' ]]; then
 	chmod +x main
 	cd ../..
 	echo -e "ffuf(){
-		tools/ffuf/./main -u \$1 -w \$2 -c -t 50 
+		tools/ffuf/./main -u \$1 -w \$2 -c -t 100 
 	}" >> .profile
 	echo -e "${green}Done${reset}\n"
 fi
@@ -54,6 +54,23 @@ if [[ $input == 'y' ]]; then
 	cd ..
 	echo -e "openredirex(){
 		python3 tools/OpenRedireX/openredirex.py -l \$1 -p \$2
+	}" >> .profile
+	echo -e "${green}Done${reset}\n"
+fi
+
+read -p "${yellow}Do want to install qsreplace[y/n]: ${reset}" input
+if [[ $input == 'y' ]]; then
+	echo "${cyan}Installing qsreplace...${reset}"
+	if [ ! -d tools ]; then
+		mkdir tools
+	fi
+	cd tools 
+	git clone https://github.com/tomnomnom/qsreplace
+	cd qsreplace
+	go build main.go
+	cd ../..
+	echo -e "qsreplace(){
+		tools/qsreplace/./main \$1
 	}" >> .profile
 	echo -e "${green}Done${reset}\n"
 fi

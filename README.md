@@ -12,7 +12,7 @@ It also has an option to find open redirects.
 **yourserver.com** ---> Your server which logs any incoming traffic Eg. Burp colloborator
 
 ### Requirements
-Since this uses GAU, FFUF and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything. 
+Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything. 
 You just need to install python and GO.
 Even if you have the tools installed I would highly recommend you to install them again so that there no conflicts while setting the paths.
 
@@ -35,6 +35,9 @@ gau(){
 openredirex(){
         echo "Usage: openredirex urls.txt payloads.txt"
         python3 /path/to/OpenRedireX/openredirex.py -l $1 -p $2 --keyword FUZZ
+}
+qsreplace(){
+		/path/to/qsreplace/./main $1
 }
 ```
 ## Usage
@@ -60,7 +63,7 @@ This will skip the process of GAU fetching URLs.
 
 Now the all the URLs with the parameters will be filtered and yourserver.com will be placed into their parameter values.(final_urls.txt)
 
-The next step is to fire request to all the final URLs. This makes use of an asynchronous python script for sending faster requests.
+The next step is to fire request to all the final URLs. 
 
 ### Finding open redirects
 
@@ -73,6 +76,8 @@ and it looks a lot cleaner, and doesn't flood your terminal.
 GAU - [https://github.com/lc/gau](https://github.com/lc/gau)
 
 ffuf - [https://github.com/ffuf/ffuf](https://github.com/ffuf/ffuf)
+
+qspreplace - [https://github.com/tomnomnom/qsreplace](https://github.com/tomnomnom/qsreplace)
 
 OpenRedireX - [https://github.com/devanshbatham/OpenRedireX](https://github.com/devanshbatham/OpenRedireX)
 
