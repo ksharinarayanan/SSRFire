@@ -66,10 +66,14 @@ echo -e "\n${yellow}Important note: This works only if you have ffuf, gau and qs
 mkdir output/$domain
 
 if [[ $3 == "" ]]; then
+	read -p "Do want to check the subdomains too?[y/n]: " sub
 	echo "${cyan}Fetching URLs using GAU (This may take some time depending on the domain. You can check the output generated till now at output/$domain/raw_urls.txt)"
 	echo -e "\n${yellow}If you don't want to wait, and want to test for the output generated till now.\n1. Exit this process\n2. Copy the output/$domain/raw_urls.txt to some other location outside of $domain folder\n3. Supply the file location as the third argument.\nEg ./ssrfx.sh domain.com server.com path/to/raw_urls.txt"
-	
-	gau $1 > output/$domain/raw_urls.txt
+	if [[ $sub == 'y' || $sub == 'Y' ]]; then
+		gau_s $1 > output/$domain/raw_urls.txt
+	else 
+		gau $1 > output/$domain/raw_urls.txt
+	fi
 
 	echo -e "${green}Done${reset}\n"
 else 
@@ -103,24 +107,14 @@ read -p "${magenta}Do you want to check for open redirects?[y/any other characte
 if [[ $input == 'y' ]]; then
 	cat output/$domain/final_urls.txt | qsreplace "FUZZ" > output/$domain/fuzz.txt
 	cat output/$domain/fuzz.txt | grep "FUZZ" > output/$domain/fuzz_urls.txt
-	echo -e "\nChoose your tool: ${red}(Works only if you have the selected tool installed)${reset}"
-
-	echo "1) FFUF${red} (Floods your terminal with large output)${reset}"
-	echo "2) OpenRedirex"
-	read -p "Enter your choice(1 or 2): " choice
+	
 	read -p "Enter the payload file location:[Press ENTER if you want to use the default]" payload
 	if [[ $payload == "" ]]; then
 		payload="payloads.txt"
 	fi
-	if [[ $choice == 1 ]]; then
-		while IFS= read -r url
-		do
-			ffuf $url $payload 
-		done < "output/$domain/fuzz_urls.txt"
-		echo "${green}Done${reset}"
-	elif [[ $choice == 2 ]]; then
-		openredirex output/$domain/fuzz_urls.txt $payload
-	fi
+		
+	openredirex output/$domain/fuzz_urls.txt $payload
+
 else
 	exit 2
 fi

@@ -21,7 +21,11 @@ if [[ $input == 'y' ]]; then
 	cd ../..
 	echo -e "gau(){
 		tools/gau/./main \$1
-	}" >> .profile
+	}
+	gau_s(){
+		tools/gau/./main --subs $1
+	}
+	" >> .profile
 	echo -e "${green}Done${reset}\n"
 fi
 
