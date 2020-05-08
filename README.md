@@ -32,6 +32,10 @@ gau(){
         /path/to/gau/./main $1
 }
 
+gau_s(){
+	/path/to/gau/./main --subs $1
+}
+
 openredirex(){
         echo "Usage: openredirex urls.txt payloads.txt"
         python3 /path/to/OpenRedireX/openredirex.py -l $1 -p $2 --keyword FUZZ

@@ -81,6 +81,7 @@ fi
 if [ -d tools ]; then
 	source .profile
 	echo "Your tools are installed under the tools directory"
+	echo "${green}All set. Now just run SSRFire!${reset}"
 else
 	echo "${red}Make sure that you edit the 10th line in the ssrfire.sh file. Refer the github README for more details.${reset}"
 fi
