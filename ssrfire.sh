@@ -94,16 +94,18 @@ echo "${yellow}Total URLs fetched with parameters: ${total_urls}${reset}"
 
 echo -e "\n${cyan}Firing requests, check your server for any traffic!${reset}"
 
-ffuf FUZZ output/$domain/final_urls.txt
+ffuf FUZZ output/$domain/final_urls.txt > output/$domain/temp.txt
+rm output/$domain/temp.txt
 
 echo "${green}Done!${reset}"
 
 read -p "${magenta}Do you want to check for open redirects?[y/any other character]${reset}" input
 if [[ $input == 'y' ]]; then
-	cat output/$domain/final_urls.txt | qsreplace "FUZZ" > output/$domain/fuzz_urls.txt
+	cat output/$domain/final_urls.txt | qsreplace "FUZZ" > output/$domain/fuzz.txt
+	cat output/$domain/fuzz.txt | grep "FUZZ" > output/$domain/fuzz_urls.txt
 	echo -e "\nChoose your tool: ${red}(Works only if you have the selected tool installed)${reset}"
 
-	echo "1) FFUF${red}(Floods your terminal with large output)${reset}"
+	echo "1) FFUF${red} (Floods your terminal with large output)${reset}"
 	echo "2) OpenRedirex"
 	read -p "Enter your choice(1 or 2): " choice
 	read -p "Enter the payload file location:[Press ENTER if you want to use the default]" payload
