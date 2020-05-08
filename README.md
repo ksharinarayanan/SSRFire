@@ -1,11 +1,11 @@
-# SSRFX
+# SSRFIRE
 An automated SSRF finder. Just give the domain name and your server and chill! ;)
 It also has an option to find open redirects.
 
-![SSRFX](https://github.com/michaelben6/SSRFX/blob/master/static/ssrfx.png)
+![SSRFIRE](https://github.com/michaelben6/SSRFIRE/blob/master/static/ssrfire.png)
 
 ### Syntax  
-./ssrfx.sh domain.com yourserver.com 
+./ssrfire.sh domain.com yourserver.com 
 
 **domain.com**     ---> The website you want to test
 
@@ -17,7 +17,7 @@ You just need to install python and GO.
 Even if you have the tools installed I would highly recommend you to install them again so that there no conflicts while setting the paths.
 
 If you don't want to install the tools again, paste this code in your .profile in your home directory and source .profile them.
-Also, you have to make a small change in the ssrfx.sh on line 10, where you have to replace source /home/hari/.profile without 
+Also, you have to make a small change in the ssrfire.sh on line 10, where you have to replace source /home/hari/.profile without 
 your .profile path. **(Only if you are not installing tools through setup.sh)**
 ```
 #Replace /path/to/ with the specific directory where the tool is installed
@@ -41,7 +41,7 @@ openredirex(){
 ```
 chmod +x setup.sh
 ./setup.sh (preferably yes for all ---> **highly recommended**)
-./ssrfx.sh domain.com yourserver.com 
+./ssrfire.sh domain.com yourserver.com 
 ```
 ### Finding SSRF
 Now, gau gets into action by fetching all the URLs of the domain. This may take a lot of time. 
@@ -52,7 +52,7 @@ But if you want to test the URLs fetched till now, quit the process.
 Copy the raw_urls.txt inside of output/domain.com and place it outside the domain.com folder
 Now run
 ```
-./ssrfx.sh domain.com yourserver.com /path/to/copied_raw_urls.txt
+./ssrfire.sh domain.com yourserver.com /path/to/copied_raw_urls.txt
 ```
 Select yes when asked whether to delete the existing folder.
 
