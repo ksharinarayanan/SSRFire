@@ -6,6 +6,10 @@ usage(){
 }
 if [ -f .profile ]; then
 	source .profile
+else
+	source /home/hari/.profile 
+	#Enter your .profile location if you haven't installed the tools through setup.sh
+	#If installed through setup.sh, no changes are required
 fi
 red=`tput setaf 1`
 green=`tput setaf 2`
@@ -58,14 +62,16 @@ if [ -d output/$domain ]; then
 	fi
 fi
 
-echo -e "\n${yellow}Important note: This works only if you have ffuf, gau installed and have set their paths accordingly. If you want to check for open redirects using openredirex, you must have openredirex too.\n ${reset}"
+echo -e "\n${yellow}Important note: This works only if you have ffuf, gau installed and have set their paths accordingly. If you want to check for open redirects using openredirex, you must have openredirex too.(Run setup.sh to and install all the tools to do that automatically)\n ${reset}"
 mkdir output/$domain
 
 if [[ $3 == "" ]]; then
 	echo "${cyan}Fetching URLs using GAU (This may take some time depending on the domain. You can check the output generated till now at output/$domain/raw_urls.txt)"
-	echo -e "\nIf you don't want to wait, and want to test for the output generated till now.\n1. Quit this process or open a new terminal\n2. Copy the output/$domain/final_urls.txt to some other location outside of $domain folder\n3. Supply the file location as the third argument.\nEg ./ssrfx.sh domain.com server.com path/to/final_urls.txt"
-gau $1 > output/$domain/raw_urls.txt
-echo -e "${green}Done${reset}\n"
+	echo -e "\n${yellow}If you don't want to wait, and want to test for the output generated till now.\n1. Exit this process\n2. Copy the output/$domain/raw_urls.txt to some other location outside of $domain folder\n3. Supply the file location as the third argument.\nEg ./ssrfx.sh domain.com server.com path/to/raw_urls.txt"
+	
+	gau $1 > output/$domain/raw_urls.txt
+
+	echo -e "${green}Done${reset}\n"
 else 
 	cat $3 > output/$domain/raw_urls.txt
 fi
