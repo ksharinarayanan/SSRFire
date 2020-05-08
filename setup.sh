@@ -23,7 +23,7 @@ if [[ $input == 'y' ]]; then
 		tools/gau/./main \$1
 	}
 	gau_s(){
-		tools/gau/./main --subs $1
+		tools/gau/./main --subs \$1
 	}
 	" >> .profile
 	echo -e "${green}Done${reset}\n"

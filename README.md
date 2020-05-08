@@ -67,7 +67,7 @@ The next step is to fire request to all the final URLs.
 
 ### Finding open redirects
 
-You can choose ffuf or openredirex for this process.
+Just enter the path to a payload file or use the default payload.
 I personally prefer openredirex, as it is specifically designed to check for open redirects by loading the URLs from the list 
 and it looks a lot cleaner, and doesn't flood your terminal.
 
