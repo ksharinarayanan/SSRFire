@@ -11,6 +11,7 @@ else
 	#Enter your .profile location if you haven't installed the tools through setup.sh
 	#If installed through setup.sh, no changes are required
 fi
+black=`tput setaf 0`
 red=`tput setaf 1`
 green=`tput setaf 2`
 yellow=`tput setaf 3`
@@ -87,7 +88,9 @@ if [[ ${server:0:4} != "http" ]]; then
 	server="http://${server}"
 fi
 
-uniq output/$domain/raw_urls.txt | grep "?" | sort | qsreplace ""  > output/$domain/parameterised_urls.txt
+uniq output/$domain/raw_urls.txt | grep "?" | sort | qsreplace ""  > output/$domain/temp-parameterised_urls.txt
+cat output/$domain/temp-parameterised_urls.txt | grep "=" >> output/$domain/parameterised_urls.txt
+rm output/$domain/temp-parameterised_urls.txt
 
 while IFS= read -r url; do
 
@@ -98,15 +101,44 @@ done < output/$domain/parameterised_urls.txt
 echo -e "${green}Done${reset}\n"
 
 total_urls=$(grep "" -c output/$domain/final_urls.txt)
-echo -e "${green}The final URL list is at $domain/final_urls.txt${reset}\n"
+echo -e "${green}The final URL list is at output/$domain/final_urls.txt${reset}\n"
 echo "${yellow}Total URLs fetched with parameters: ${total_urls}${reset}"
 
-echo -e "\n${cyan}Firing requests, check your server for any traffic!${reset}"
+read -p "${magenta}Do you want to check for SSRF: [y/n] ${reset}" input
 
-ffuf FUZZ output/$domain/final_urls.txt > output/$domain/temp.txt
-rm output/$domain/temp.txt
+if [[ $input == 'y' ]]; then
+	echo -e "\n${cyan}Firing requests, check your server for any traffic!${reset}"
 
-echo "${green}Done!${reset}"
+	ffuf FUZZ output/$domain/final_urls.txt > output/$domain/temp.txt
+	rm output/$domain/temp.txt
+
+	echo "${green}Done!${reset}"
+fi
+
+echo -e "${red}\nWARNING: Testing for XSS generates a lot of noise. You must test only those sites on which you are authorised to.${reset}"
+read -p "${magenta}Do you want to check for XSS: [y/n] ${reset}" input
+
+if [[ $input == 'y' ]]; then
+	echo -e "\n${red}You should not blindly trust the results. There may be a lot of false positives.${reset}\n"
+	echo -e "\n${yellow}Ignore the output below, if there are any suspects, the final list of suspected URLs will be at output/$domain/xss-suspects.txt${reset}\n"
+	count=0
+	while IFS= read -r url; do
+		 suspect="${url}${server}<>\"\""
+		 if [[ $(curl $suspect | grep $server ) != '' ]]; then
+			echo $url >> output/$domain/xss-suspects.txt
+		 fi
+		 count=$((count+1))
+		 echo "${cyan}Progress: ${count}/${total_urls} URLs${reset}"
+	done < output/$domain/parameterised_urls.txt
+	echo "${reset}"
+	if [[ -f output/$domain/xss-suspects.txt ]]; then
+		echo -e "\n${red}Number of suspected URLs: $(grep "" -c output/$domain/xss-suspects.txt)\n"
+		echo "${green}The suspected URLs are stored in output/$domain/xss-suspects.txt${reset}"
+	else
+		echo "${yellow}No reflections found! :( ${reset}"
+	fi
+
+fi
 
 read -p "${magenta}Do you want to check for open redirects?[y/any other character]${reset}" input
 if [[ $input == 'y' ]]; then
