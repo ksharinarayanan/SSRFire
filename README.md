@@ -11,6 +11,8 @@ It also has an option to find open redirects.
 
 **yourserver.com** ---> Your server which logs any incoming traffic Eg. Burp colloborator
 
+If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com).
+
 ### Requirements
 Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything. 
 You just need to install python and GO.
@@ -73,7 +75,7 @@ The next step is to fire request to all the final URLs.
 
 **Warning: This generates a lot of traffic. Do not use this against the sites which you are not authorised to test**
 
-This tests all the URLs fetched, and based on how the input is reflected in the response. It adds that particular URL to the output/domain.com/xss-suspects.txt **(This may contain false positives)** 
+This tests all the URLs fetched, and based on how the input is reflected in the response, it adds that particular URL to the output/domain.com/xss-suspects.txt **(This may contain false positives)** 
 
 For further testing this, you can input this list to the XSS detection tools like XSStrike to find XSS.
 
