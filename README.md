@@ -1,6 +1,6 @@
 # SSRFIRE
 An automated SSRF finder. Just give the domain name and your server and chill! ;)
-It also has an option to find open redirects.
+It also has options to find XSS and open redirects.
 
 ![SSRFIRE](https://github.com/michaelben6/SSRFIRE/blob/master/static/ssrfire.png)
 
