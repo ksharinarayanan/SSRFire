@@ -69,6 +69,14 @@ Now the all the URLs with the parameters will be filtered and yourserver.com wil
 
 The next step is to fire request to all the final URLs. 
 
+### Finding XSS
+
+**Warning: This generates a lot of traffic. Do not use this against the sites which you are not authorised to test**
+
+This tests all the URLs fetched, and based on how the input is reflected in the response. It adds that particular URL to the output/domain.com/xss-suspects.txt **(This may contain false positives)** 
+
+For further testing this, you can input this list to the XSS detection tools like XSStrike to find XSS.
+
 ### Finding open redirects
 
 Just enter the path to a payload file or use the default payload.
