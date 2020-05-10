@@ -102,7 +102,7 @@ if [[ $file == "" ]]; then
 
 	echo -e "${green}Done${reset}\n"
 else 
-	cat $3 > output/$domain/raw_urls.txt
+	cat $file > output/$domain/raw_urls.txt
 fi
 
 echo "${cyan}Sorting out the URLs with parameters and replacing the parameter's original value with your server${reset}"
@@ -149,9 +149,16 @@ if [[ $input == 'y' ]]; then
 	echo -e "\n${yellow}Ignore the output below, if there are any suspects, the final list of suspected URLs will be at output/$domain/xss-suspects.txt${reset}\n"
 	count=0
 	while IFS= read -r url; do
-		 suspect="${url}${server}<>"
-		 if [[ $(curl --cookie $cookie "${suspect}" | grep "${server}<>" ) != '' ]]; then
-			echo $url >> output/$domain/xss-suspects.txt
+		 echo $url | qsreplace "michaelben<>" > output/$domain/temp.txt
+		 rm output/$domain/temp.txt
+		 if [[ $cookie != "" ]]; then
+			 if [[ $(curl --cookie $cookie $url | grep "michaelben<>" ) != '' ]]; then
+				echo $url >> output/$domain/xss-suspects.txt
+			 fi
+		 else
+			 if [[ $(curl $url | grep "${server}<>") != '' ]]; then
+				 echo $url >> output/$domain/xss-suspects.txt
+			 fi
 		 fi
 		 count=$((count+1))
 		 echo "${cyan}Progress: ${count}/${total_urls} URLs${reset}"
