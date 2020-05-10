@@ -5,7 +5,7 @@ It also has options to find XSS and open redirects.
 ![SSRFIRE](https://github.com/michaelben6/SSRFIRE/blob/master/static/ssrfire.png)
 
 ### Syntax 
-./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies"
+./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies
 
 
 **domain.com**        --->  The domain for which you want to test"
