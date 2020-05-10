@@ -26,7 +26,7 @@ your .profile path. **(Only if you are not installing tools through setup.sh)**
 #If you already have configured paths for any of the tools, replace that code with the below one.
 ffuf(){
         echo "Usage: ffuf https://www.domain.com/FUZZ payloads.txt"
-        /path/to/ffuf/./main -u $1 -w $2 -c -t 100
+        /path/to/ffuf/./main -u $1 -w $2 -b $3 -c -t 100
 }
 
 gau(){
