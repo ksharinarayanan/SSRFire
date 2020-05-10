@@ -8,13 +8,13 @@ It also has options to find XSS and open redirects.
 ./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies
 
 
-**domain.com**        --->  The domain for which you want to test"
+**domain.com**        --->  The domain for which you want to test
 
-**yourserver.com**    --->  Your server which detects SSRF. Eg. Burp colloborator"
+**yourserver.com**    --->  Your server which detects SSRF. Eg. Burp colloborator
 
-**custom_file.txt**   --->  Optional argument. You give your own custom URLs instead of using gau"
+**custom_file.txt**   --->  Optional argument. You give your own custom URLs instead of using gau
 
-**cookies**           --->  Optional argument. To send requests as an authenticated user" 
+**cookies**           --->  Optional argument. To send requests as an authenticated user
 
 
 If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com) as your server.
