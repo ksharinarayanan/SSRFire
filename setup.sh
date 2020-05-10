@@ -44,7 +44,7 @@ if [[ $input == 'y' ]]; then
 	chmod +x main
 	cd ../..
 	echo -e "ffuf(){
-		tools/ffuf/./main -u \$1 -w \$2 -c -t 100 
+		tools/ffuf/./main -u \$1 -w \$2 -b \$3 -c -t 100 
 	}" >> .profile
 	echo -e "\n"
 fi
