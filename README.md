@@ -4,14 +4,14 @@ It also has options to find XSS and open redirects.
 
 ![SSRFIRE](https://github.com/michaelben6/SSRFIRE/blob/master/static/ssrfire.png)
 
-### Syntax  
-./ssrfire.sh domain.com yourserver.com 
+### Syntax 
+./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies"
+**domain.com**        --->  The domain for which you want to test"
+**yourserver.com**    --->  Your server which detects SSRF. Eg. Burp colloborator"
+**custom_file.txt**   --->  Optional argument. You give your own custom URLs instead of using gau"
+**cookies**           --->  Optional argument. To send requests as an authenticated user" 
 
-**domain.com**     ---> The website you want to test
-
-**yourserver.com** ---> Your server which logs any incoming traffic Eg. Burp colloborator
-
-If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com).
+If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com) as your server.
 
 ### Requirements
 Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything. 
