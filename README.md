@@ -10,7 +10,7 @@ It also has options to find XSS and open redirects.
 
 **domain.com**        --->  The domain for which you want to test
 
-**yourserver.com**    --->  Your server which detects SSRF. Eg. Burp colloborator
+**yourserver.com**    --->  Your server which detects SSRF. Eg. Burp collaborator
 
 **custom_file.txt**   --->  Optional argument. You give your own custom URLs instead of using gau
 
