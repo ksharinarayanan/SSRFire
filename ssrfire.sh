@@ -7,8 +7,8 @@ usage(){
 }
 if [ -f .profile ]; then
 	source .profile
-else
-	source /home/hari/.profile 
+elif [ -f ${HOME}/.profile ]; then
+	source ${HOME}/.profile
 	#Enter your .profile location if you haven't installed the tools through setup.sh
 	#If installed through setup.sh, no changes are required
 fi
