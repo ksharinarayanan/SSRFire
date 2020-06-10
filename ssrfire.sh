@@ -152,11 +152,11 @@ if [[ $input == 'y' ]]; then
 		 echo $url | qsreplace "michaelben<>" > output/$domain/temp.txt
 		 rm output/$domain/temp.txt
 		 if [[ $cookie != "" ]]; then
-			 if [[ $(curl --cookie $cookie $url | grep "michaelben<>" ) != '' ]]; then
+			 if [[ $(curl --silent --cookie $cookie $url | grep "michaelben<>" ) != '' ]]; then
 				echo $url >> output/$domain/xss-suspects.txt
 			 fi
 		 else
-			 if [[ $(curl $url | grep "${server}<>") != '' ]]; then
+			 if [[ $(curl --silent $url | grep "${server}<>") != '' ]]; then
 				 echo $url >> output/$domain/xss-suspects.txt
 			 fi
 		 fi
