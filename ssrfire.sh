@@ -1,5 +1,5 @@
 usage(){
-	echo "Usage: ./find.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies"
+	echo "Usage: ./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies"
 	echo "domain.com        --- The domain for which you want to test"
 	echo "yourserver.com    --- Your server which detects SSRF. Eg. Burp colloborator"
 	echo "custom_file.txt   --- Optional argument. You give your own custom URLs instead of using gau"
