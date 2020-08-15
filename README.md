@@ -1,10 +1,10 @@
 # SSRFIRE
-An automated SSRF finder. Just give the domain name and your server and chill! ;)
+An automated [SSRF](https://en.wikipedia.org/wiki/Server-side_request_forgery) finder. Just give the domain name and your server and chill! ;)
 It also has options to find XSS and open redirects.
 
 ![SSRFIRE](https://github.com/michaelben6/SSRFIRE/blob/master/static/ssrfire.png)
 
-### Syntax 
+### Syntax
 ./ssrfire.sh -d domain.com -s yourserver.com -f custom_file.txt -c cookies
 
 
@@ -20,12 +20,12 @@ It also has options to find XSS and open redirects.
 If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com) as your server.
 
 ### Requirements
-Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything. 
+Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** would install everything.
 You just need to install python and GO.
 Even if you have the tools installed I would highly recommend you to install them again so that there no conflicts while setting the paths.
 
 If you don't want to install the tools again, paste this code in your .profile in your home directory and source .profile them.
-Also, you have to make a small change in the ssrfire.sh on line 10, where you have to replace source /home/hari/.profile without 
+Also, you have to make a small change in the ssrfire.sh on line 10, where you have to replace source /home/hari/.profile without
 your .profile path. **(Only if you are not installing tools through setup.sh)**
 ```
 #Replace /path/to/ with the specific directory where the tool is installed
@@ -56,14 +56,14 @@ qsreplace(){
 ```
 chmod +x setup.sh
 ./setup.sh (preferably yes for all ---> **highly recommended**)
-./ssrfire.sh domain.com yourserver.com 
+./ssrfire.sh domain.com yourserver.com
 ```
 ### Finding SSRF
-Now, gau gets into action by fetching all the URLs of the domain. This may take a lot of time. 
+Now, gau gets into action by fetching all the URLs of the domain. This may take a lot of time.
 You can check the output generated till now at output/domain.com/raw_urls.txt
 
 Let it run for at least 10-15 minutes, and then if you want to continue, you can.
-But if you want to test the URLs fetched till now, quit the process. 
+But if you want to test the URLs fetched till now, quit the process.
 Copy the raw_urls.txt inside of output/domain.com and place it outside the domain.com folder
 Now run
 ```
@@ -75,20 +75,20 @@ This will skip the process of GAU fetching URLs.
 
 Now the all the URLs with the parameters will be filtered and yourserver.com will be placed into their parameter values.(final_urls.txt)
 
-The next step is to fire request to all the final URLs. 
+The next step is to fire request to all the final URLs.
 
 ### Finding XSS
 
 **Warning: This generates a lot of traffic. Do not use this against the sites which you are not authorised to test**
 
-This tests all the URLs fetched, and based on how the input is reflected in the response, it adds that particular URL to the output/domain.com/xss-suspects.txt **(This may contain false positives)** 
+This tests all the URLs fetched, and based on how the input is reflected in the response, it adds that particular URL to the output/domain.com/xss-suspects.txt **(This may contain false positives)**
 
 For further testing this, you can input this list to the XSS detection tools like XSStrike to find XSS.
 
 ### Finding open redirects
 
 Just enter the path to a payload file or use the default payload.
-I personally prefer openredirex, as it is specifically designed to check for open redirects by loading the URLs from the list 
+I personally prefer openredirex, as it is specifically designed to check for open redirects by loading the URLs from the list
 and it looks a lot cleaner, and doesn't flood your terminal.
 
 ## Tools used:
