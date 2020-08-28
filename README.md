@@ -104,6 +104,4 @@ OpenRedireX - [https://github.com/devanshbatham/OpenRedireX](https://github.com/
 Thanks to all the authors of the tools.
 
 ***
-Finally, if you are stuck in any of the above processes, you can always reach me at [twitter](https://twitter.com/micha3lb3n)
-
 
