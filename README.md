@@ -17,7 +17,7 @@ It also has options to find XSS and open redirects.
 **cookies**           --->  Optional argument. To send requests as an authenticated user
 
 
-If you don't have burpsuite professional, you can use [ssrftest.com](https://www.ssrftest.com) as your server.
+If you don't have burpsuite professional, you can use [interact sh](https://interact.projectdiscovery.io/) by the awesome projectdiscovery team as your server.
 
 ### Requirements
 Since this uses GAU, FFUF, qsreplace and OpenRedirex, you need GO and python 3.7+. You need not have the tools installed, as the script **setup.sh** will install everything.
