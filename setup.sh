@@ -14,10 +14,11 @@ mkdir tools
 cd tools
 git clone https://github.com/lc/gau.git
 echo -e "Building the main.go file.\n${yellow}[Warning] This process fails if you don't have go installed. If you have any error messages below, try again after installing go.${reset}"
-cd gau
+cd gau/cmd/gau
 go build main.go
 chmod +x main
-cd ../..
+mv main ../../main
+cd ../../../..
 echo -e "gau(){
 	tools/gau/./main \$1
 }
